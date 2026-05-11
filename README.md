@@ -1,6 +1,6 @@
 # agentic-data-tools
 
-External tools to interact with data platforms:
+External tools to interact with data platforms and tooling:
 
 ### Fabric
 
@@ -37,5 +37,7 @@ External tools to interact with data platforms:
 - dbt: [dbt-labs/dbt-agent-skills](https://github.com/dbt-labs/dbt-agent-skills)
 - duckdb: [duckdb/duckdb-skills](https://github.com/duckdb/duckdb-skills)
 - Google databases: [googleapis/mcp-toolbox](https://github.com/googleapis/mcp-toolbox)
+- Hugging Face: [huggingface/skills](https://github.com/huggingface/skills)
 - Spark: [kubeflow/mcp-apache-spark-history-server](https://github.com/kubeflow/mcp-apache-spark-history-server)
 - Spark: [yaooqinn/spark-history-cli](yaooqinn/spark-history-cli)
+- Terraform: [antonbabenko/terraform-skill](https://github.com/antonbabenko/terraform-skill)
