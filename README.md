@@ -1,4 +1,4 @@
-# agentic-data
+# agentic-data-tools
 
 External tools to interact with data platforms:
 
@@ -18,7 +18,12 @@ External tools to interact with data platforms:
 - Skills: [databricks/databricks-agent-skills](https://github.com/databricks/databricks-agent-skills)
 - MCP: [databrickslabs/mcp](https://github.com/databrickslabs/mcp)
 - CLI: [databricks/cli](https://github.com/databricks/cli)
+
+--
+
 - AI Dev Kit: [databricks-solutions/ai-dev-kit](https://github.com/databricks-solutions/ai-dev-kit)
+- App templates: [databricks/app-templates](https://github.com/databricks/app-templates)
+- MLflow: [mlflow/skills](https://github.com/mlflow/skills)
 
 **/ Community**
 
@@ -30,6 +35,7 @@ External tools to interact with data platforms:
 - Clickhouse: [clickhouse/agent-skills](https://github.com/ClickHouse/agent-skills)
 - DataFusion: [datafusion-contrib/datafusion-skills](https://github.com/datafusion-contrib/datafusion-skills)
 - dbt: [dbt-labs/dbt-agent-skills](https://github.com/dbt-labs/dbt-agent-skills)
+- duckdb: [duckdb/duckdb-skills](https://github.com/duckdb/duckdb-skills)
 - Google databases: [googleapis/mcp-toolbox](https://github.com/googleapis/mcp-toolbox)
 - Spark: [kubeflow/mcp-apache-spark-history-server](https://github.com/kubeflow/mcp-apache-spark-history-server)
 - Spark: [yaooqinn/spark-history-cli](yaooqinn/spark-history-cli)
