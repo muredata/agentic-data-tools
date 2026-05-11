@@ -2,7 +2,7 @@
 
 External tools to interact with data platforms and tooling:
 
-### Fabric
+### Microsoft Fabric
 
 - Skills: [microsoft/skills-for-fabric](https://github.com/microsoft/skills-for-fabric)
 - MCP: [microsoft/mcp/servers/Fabric.Mcp.Server](microsoft/mcp/tree/main/servers/Fabric.Mcp.Server)
@@ -32,12 +32,15 @@ External tools to interact with data platforms and tooling:
 ### Others
 
 - Airflow: [astronomer/agents](https://github.com/astronomer/agents)
+- Azure: [microsoft/azure-skills](https://github.com/microsoft/azure-skills/)
 - Clickhouse: [clickhouse/agent-skills](https://github.com/ClickHouse/agent-skills)
 - DataFusion: [datafusion-contrib/datafusion-skills](https://github.com/datafusion-contrib/datafusion-skills)
 - dbt: [dbt-labs/dbt-agent-skills](https://github.com/dbt-labs/dbt-agent-skills)
 - duckdb: [duckdb/duckdb-skills](https://github.com/duckdb/duckdb-skills)
+- Google: [google/skills](https://github.com/google/skills)
 - Google databases: [googleapis/mcp-toolbox](https://github.com/googleapis/mcp-toolbox)
 - Hugging Face: [huggingface/skills](https://github.com/huggingface/skills)
+- Snowflake: [snowflake-labs/snowflake-ai-kit](https://github.com/Snowflake-Labs/snowflake-ai-kit)
 - Spark: [kubeflow/mcp-apache-spark-history-server](https://github.com/kubeflow/mcp-apache-spark-history-server)
 - Spark: [yaooqinn/spark-history-cli](yaooqinn/spark-history-cli)
 - Terraform: [antonbabenko/terraform-skill](https://github.com/antonbabenko/terraform-skill)
