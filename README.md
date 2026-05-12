@@ -40,6 +40,8 @@ External tools to interact with data platforms and tooling:
 - Google: [google/skills](https://github.com/google/skills)
 - Google databases: [googleapis/mcp-toolbox](https://github.com/googleapis/mcp-toolbox)
 - Hugging Face: [huggingface/skills](https://github.com/huggingface/skills)
+- Motherduck: [motherduckdb/agent-skills](https://github.com/motherduckdb/agent-skills/)
+- Motherduck: [motherduckdb/mcp-server-motherduck](https://github.com/motherduckdb/mcp-server-motherduck)
 - Snowflake: [snowflake-labs/snowflake-ai-kit](https://github.com/Snowflake-Labs/snowflake-ai-kit)
 - Spark: [kubeflow/mcp-apache-spark-history-server](https://github.com/kubeflow/mcp-apache-spark-history-server)
 - Spark: [yaooqinn/spark-history-cli](yaooqinn/spark-history-cli)
