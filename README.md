@@ -28,9 +28,15 @@ External tools to interact with data platforms and tooling:
 - App templates: [databricks/app-templates](https://github.com/databricks/app-templates)
 - MLflow: [mlflow/skills](https://github.com/mlflow/skills)
 
+
 **/ Community**
 
 - TODO
+
+### AWS
+- Agent Toolkit for AWS:  [agent-toolkit-for-aws](https://github.com/aws/agent-toolkit-for-aws)
+- Skills: [toolkit-skills](https://github.com/aws/agent-toolkit-for-aws/tree/main/skills) 
+- Open Source MCP Servers for AWS: [awslabs/mcp](https://github.com/awslabs/mcp)
 
 ### Others
 
