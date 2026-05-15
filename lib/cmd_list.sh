@@ -1,10 +1,4 @@
 cmd_list() {
-    if [ -n "$PROJECT_DIR" ]; then
-        echo "Listing installed skills for project $PROJECT_DIR..."
-    else
-        echo "Listing installed skills globally..."
-    fi
-
     local claude_target codex_target copilot_target
     if [ -n "$PROJECT_DIR" ]; then
         claude_target="$PROJECT_DIR/.claude/skills"
@@ -27,6 +21,15 @@ cmd_list() {
         agents=("claude:$claude_target" "codex:$codex_target" "copilot:$copilot_target")
     fi
 
+    if [ "$OUTPUT" != json ]; then
+        if [ -n "$PROJECT_DIR" ]; then
+            echo "Listing installed skills for project $PROJECT_DIR..."
+        else
+            echo "Listing installed skills globally..."
+        fi
+    fi
+
+    local json_items=()
     for entry in "${agents[@]}"; do
         local agent_name="${entry%%:*}"
         local skills_dir="${entry#*:}"
@@ -36,9 +39,20 @@ cmd_list() {
                 [ -n "$item" ] && skills+=("$item")
             done < <(ls -1 "$skills_dir" 2>/dev/null)
         fi
-        printf "\n%b%s (%d)%b\n" "$BOLD" "$agent_name" "${#skills[@]}" "$RESET"
-        for skill_name in "${skills[@]}"; do
-            printf "  - %s\n" "$skill_name"
-        done
+
+        if [ "$OUTPUT" = json ]; then
+            local skills_json
+            skills_json=$(_json_str_arr "${skills[@]}")
+            json_items+=("{\"agent\": \"$agent_name\", \"skills\": $skills_json}")
+        else
+            printf "\n%b%s (%d)%b\n" "$BOLD" "$agent_name" "${#skills[@]}" "$RESET"
+            for skill_name in "${skills[@]}"; do
+                printf "  - %s\n" "$skill_name"
+            done
+        fi
     done
+
+    if [ "$OUTPUT" = json ]; then
+        json_envelope "list" "${json_items[@]}"
+    fi
 }

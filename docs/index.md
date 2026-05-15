@@ -76,4 +76,5 @@ External tools to interact with data platforms and tooling:
 
 --
 
+- Data agent (Gemini CLI): [gemini-cli-extensions/data-agent-kit-starter-pack](https://github.com/gemini-cli-extensions/data-agent-kit-starter-pack)
 - Google Workspace CLI: [googleworkspace/cli](https://github.com/googleworkspace/cli)

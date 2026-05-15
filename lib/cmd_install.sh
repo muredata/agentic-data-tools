@@ -70,7 +70,7 @@ cmd_install() {
 
     mkdir -p "$CACHE_DIR"
 
-    if [ "$DRY_RUN" = false ] && [ "$YES" = false ] && [ -t 1 ]; then
+    if [ "$DRY_RUN" = false ] && [ "$YES" = false ] && [ "$OUTPUT" != json ] && [ -t 1 ]; then
         local preview_skills=()
         while IFS= read -r s; do
             preview_skills+=("$s")
@@ -97,12 +97,15 @@ cmd_install() {
         fi
     fi
 
-    if [ -n "$PROJECT_DIR" ]; then
-        echo "Installing skills for project $PROJECT_DIR..."
-    else
-        echo "Installing skills..."
+    if [ "$OUTPUT" != json ]; then
+        if [ -n "$PROJECT_DIR" ]; then
+            echo "Installing skills for project $PROJECT_DIR..."
+        else
+            echo "Installing skills..."
+        fi
     fi
 
+    local json_items=()
     local tool=""
     while IFS= read -r line; do
         if [[ "$line" == "---TOOL---" ]]; then
@@ -168,7 +171,7 @@ cmd_install() {
                     skill_name=$(basename "$skill_dir")
                     [ -n "$skill_filter" ] && [ "$skill_name" != "$skill_filter" ] && continue
 
-                    if [ "$header_printed" = false ]; then
+                    if [ "$OUTPUT" != json ] && [ "$header_printed" = false ]; then
                         printf "\nInstalling agent skills from %s\n\n" "$src"
                         header_printed=true
                     fi
@@ -177,23 +180,45 @@ cmd_install() {
                         local agent_name="${entry%%:*}"
                         local target_dir="${entry#*:}"
                         local dest="$target_dir/$skill_name"
-                        if [ "$DRY_RUN" = true ]; then
-                            dry_run_msg "Would link $skill_name[$agent_name] → $dest"
-                        else
-                            mkdir -p "$target_dir"
+
+                        if [ "$OUTPUT" = json ]; then
+                            local result
                             if [ -n "$pin_hash" ]; then
+                                result="pinned"
+                                mkdir -p "$target_dir"
                                 ln -sfn "$skill_dir" "$dest"
-                                printf "%b  %s[%s] (pinned @ %s)\n" "${GREEN}✓${RESET}" "$skill_name" "$agent_name" "$pin_hash"
                             elif [ -e "$dest" ] || [ -L "$dest" ]; then
                                 if [ "$FORCE" = true ]; then
+                                    result="reinstalled"
+                                    mkdir -p "$target_dir"
                                     ln -sfn "$skill_dir" "$dest"
-                                    printf "%b  %s[%s] (reinstalled)\n" "${GREEN}✓${RESET}" "$skill_name" "$agent_name"
                                 else
-                                    printf "%b  %s[%s] (already installed)\n" "${YELLOW}○${RESET}" "$skill_name" "$agent_name"
+                                    result="already_installed"
                                 fi
                             else
-                                ln -sfn "$skill_dir" "$dest"
-                                printf "%b  %s[%s]\n" "${GREEN}✓${RESET}" "$skill_name" "$agent_name"
+                                result="installed"
+                                [ "$DRY_RUN" = false ] && { mkdir -p "$target_dir"; ln -sfn "$skill_dir" "$dest"; }
+                            fi
+                            json_items+=("{\"skill\": \"$skill_name\", \"agent\": \"$agent_name\", \"result\": \"$result\"}")
+                        else
+                            if [ "$DRY_RUN" = true ]; then
+                                dry_run_msg "Would link $skill_name[$agent_name] → $dest"
+                            else
+                                mkdir -p "$target_dir"
+                                if [ -n "$pin_hash" ]; then
+                                    ln -sfn "$skill_dir" "$dest"
+                                    printf "%b  %s[%s] (pinned @ %s)\n" "${GREEN}✓${RESET}" "$skill_name" "$agent_name" "$pin_hash"
+                                elif [ -e "$dest" ] || [ -L "$dest" ]; then
+                                    if [ "$FORCE" = true ]; then
+                                        ln -sfn "$skill_dir" "$dest"
+                                        printf "%b  %s[%s] (reinstalled)\n" "${GREEN}✓${RESET}" "$skill_name" "$agent_name"
+                                    else
+                                        printf "%b  %s[%s] (already installed)\n" "${YELLOW}○${RESET}" "$skill_name" "$agent_name"
+                                    fi
+                                else
+                                    ln -sfn "$skill_dir" "$dest"
+                                    printf "%b  %s[%s]\n" "${GREEN}✓${RESET}" "$skill_name" "$agent_name"
+                                fi
                             fi
                         fi
                     done
@@ -206,4 +231,7 @@ cmd_install() {
     done < <(iter_skills "$PLATFORM")
 
     done_msg
+    if [ "$OUTPUT" = json ]; then
+        json_envelope "install" "${json_items[@]}"
+    fi
 }

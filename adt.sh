@@ -17,6 +17,7 @@ FORCE=false
 UNPIN=false
 PIN=""
 YES=false
+OUTPUT="${ADT_OUTPUT_FORMAT:-plain}"
 SELECTED_SKILLS=()
 
 source "$SCRIPT_DIR/lib/ui.sh"
@@ -62,6 +63,13 @@ while [[ $# -gt 0 ]]; do
         --pin)
             [ -z "${2-}" ] || [[ "${2}" == -* ]] && { err_msg "Flag --pin requires a value"; exit 2; }
             PIN="$2"; shift 2 ;;
+        -o|--output)
+            [ -z "${2-}" ] || [[ "${2}" == -* ]] && { err_msg "Flag --output requires a value"; exit 2; }
+            case "$2" in
+                plain|json) OUTPUT="$2" ;;
+                *) err_msg "Unknown output format '$2' — valid values: plain, json"; exit 1 ;;
+            esac
+            shift 2 ;;
         -h|--help)
             case "$COMMAND" in
                 search)    usage_search ;;
@@ -78,6 +86,12 @@ while [[ $# -gt 0 ]]; do
             SKILL_FILTER="$1"; shift ;;
     esac
 done
+
+if [ "$OUTPUT" = json ] && ! command -v jq &>/dev/null; then
+    err_msg "--output json requires jq."
+    printf "  Install: brew install jq  /  apt install jq  /  winget install jq\n"
+    exit 1
+fi
 
 case "$COMMAND" in
     search)    cmd_search ;;

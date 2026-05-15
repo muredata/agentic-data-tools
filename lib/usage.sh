@@ -27,6 +27,7 @@ Browse available skills from all configured platforms.
 Usage: $(basename "$0") search [flags]
 
 Flags:
+    -o, --output <format>    Output format: plain (default), json
     -p, --platform <name>    Filter by platform (fabric, databricks)
 
 Inherited flags:
@@ -43,6 +44,7 @@ Usage: $(basename "$0") list [flags]
 
 Flags:
     -a, --agent <name>       Target agent only (claude, codex, copilot)
+    -o, --output <format>    Output format: plain (default), json
         --project <path>     Target a project directory (not global)
 
 Inherited flags:
@@ -61,6 +63,7 @@ Flags:
     -a, --agent <name>       Target agent only (claude, codex, copilot)
     -n, --dry-run            Preview without making changes
     -f, --force              Reinstall even if already present
+    -o, --output <format>    Output format: plain (default), json
         --pin <ref>          Pin to a specific git commit or tag
     -p, --platform <name>    Filter by platform (fabric, databricks)
         --project <path>     Target a project directory (not global)
@@ -81,6 +84,7 @@ Usage: $(basename "$0") uninstall <skill-name> [flags]
 Flags:
     -a, --agent <name>       Target agent only (claude, codex, copilot)
     -n, --dry-run            Preview without making changes
+    -o, --output <format>    Output format: plain (default), json
         --project <path>     Target a project directory (not global)
 
 Inherited flags:
@@ -96,12 +100,13 @@ Pull latest changes for all cached repos.
 Usage: $(basename "$0") update [flags]
 
 Flags:
-    -n, --dry-run      Preview without making changes
-        --status       Show update status and per-skill dates
-        --unpin        Restore pinned repos to latest and update them
+    -n, --dry-run            Preview without making changes
+    -o, --output <format>    Output format: plain (default), json
+        --status             Show update status and per-skill dates
+        --unpin              Restore pinned repos to latest and update them
 
 Inherited flags:
-    -h, --help         Show this help
+    -h, --help               Show this help
 
 EOF
 }

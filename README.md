@@ -4,6 +4,14 @@
 
 A skills manager for external data tools. 
 
+## Dependencies
+
+| Tool | Required | Purpose |
+|---|---|---|
+| `git` | Always | Clone and update skill repos |
+| `fzf` | `adt uninstall` (no args) | Interactive skill picker |
+| `jq` | `--output json` | JSON formatting |
+
 ## Install
 
 ```bash
@@ -38,7 +46,6 @@ adt search --platform fabric
 # Show installed skills
 adt list
 adt list --agent claude
-adt list --remote                        # check for updates + per-skill dates
 
 # Install skills
 adt install                              # all skills, all agents
@@ -57,10 +64,25 @@ adt uninstall --dry-run
 
 # Update cached repos
 adt update
+adt update --status                      # check status + per-skill dates
 adt update --dry-run
+
+# JSON output (requires jq)
+adt search --output json
+adt list --output json
+adt install --output json
+adt update --status --output json
 ```
 
 Skills are cloned to `~/.agentic-data-tools/cache/` and symlinked into the appropriate agent directories (`~/.claude/skills/`, `~/.codex/skills/`).
+
+## Environment variables
+
+| Variable | Default | Description |
+|---|---|---|
+| `ADT_TOOLS_JSON` | `<repo>/tools.json` | Path to tools index |
+| `ADT_CACHE_DIR` | `~/.agentic-data-tools/cache` | Where repos are cloned |
+| `ADT_OUTPUT_FORMAT` | `plain` | Output format (`plain` or `json`) |
 
 ## Index
 

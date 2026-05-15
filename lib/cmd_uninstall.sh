@@ -78,7 +78,7 @@ cmd_uninstall() {
     local skill_name="${1:-}"
 
     if [ -z "$skill_name" ]; then
-        if [ ! -t 0 ]; then
+        if [ ! -t 0 ] || [ "$OUTPUT" = json ]; then
             err_msg "Uninstall requires a skill name"; exit 2
         fi
         _select_skill_interactive
@@ -109,11 +109,14 @@ cmd_uninstall() {
         targets=("claude:$claude_target" "codex:$codex_target" "copilot:$copilot_target")
     fi
 
+    local json_items=()
     local any_found=false
     for skill_name in "${SELECTED_SKILLS[@]}"; do
-        echo ""
-        echo "Uninstalling $skill_name..."
-        echo ""
+        if [ "$OUTPUT" != json ]; then
+            echo ""
+            echo "Uninstalling $skill_name..."
+            echo ""
+        fi
 
         local found=false
         for entry in "${targets[@]}"; do
@@ -124,12 +127,15 @@ cmd_uninstall() {
             found=true
             any_found=true
             if [ "$DRY_RUN" = true ]; then
-                dry_run_msg "Would remove $skill_name[$agent_name]"
+                [ "$OUTPUT" != json ] && dry_run_msg "Would remove $skill_name[$agent_name]"
+                json_items+=("{\"skill\": \"$skill_name\", \"agent\": \"$agent_name\", \"result\": \"removed\"}")
             elif [ -L "$dest" ]; then
                 rm "$dest"
-                printf "%b  %s[%s]\n" "${GREEN}✓${RESET}" "$skill_name" "$agent_name"
+                [ "$OUTPUT" != json ] && printf "%b  %s[%s]\n" "${GREEN}✓${RESET}" "$skill_name" "$agent_name"
+                json_items+=("{\"skill\": \"$skill_name\", \"agent\": \"$agent_name\", \"result\": \"removed\"}")
             else
-                printf "%b  %s[%s] (not a symlink — remove manually: %s)\n" "${YELLOW}⚠${RESET}" "$skill_name" "$agent_name" "$dest"
+                [ "$OUTPUT" != json ] && printf "%b  %s[%s] (not a symlink — remove manually: %s)\n" "${YELLOW}⚠${RESET}" "$skill_name" "$agent_name" "$dest"
+                json_items+=("{\"skill\": \"$skill_name\", \"agent\": \"$agent_name\", \"result\": \"manual_removal_required\"}")
             fi
         done
 
@@ -143,4 +149,7 @@ cmd_uninstall() {
     fi
 
     done_msg
+    if [ "$OUTPUT" = json ]; then
+        json_envelope "uninstall" "${json_items[@]}"
+    fi
 }
