@@ -1,0 +1,34 @@
+{
+  "tools": [
+    {
+      "name": "skills-for-fabric",
+      "description": "Official agent skills for Microsoft Fabric",
+      "source": "https://github.com/microsoft/skills-for-fabric",
+      "path": "skills/",
+      "platform": "fabric",
+      "type": "skill",
+      "official": true,
+      "agents": ["claude", "codex", "copilot"]
+    },
+    {
+      "name": "databricks-agent-skills",
+      "description": "Official agent skills for Databricks",
+      "source": "https://github.com/databricks/databricks-agent-skills",
+      "path": "skills/",
+      "platform": "databricks",
+      "type": "skill",
+      "official": true,
+      "agents": ["claude", "codex", "copilot"]
+    },
+    {
+      "name": "agent-toolkit-for-aws",
+      "description": "Official agent toolkit for AWS",
+      "source": "https://github.com/aws/agent-toolkit-for-aws",
+      "path": ["skills/specialized-skills/analytics-skills/", "skills/specialized-skills/storage-skills/"],
+      "platform": "aws",
+      "type": "skill",
+      "official": true,
+      "agents": ["claude", "codex", "copilot"]
+    }
+  ]
+}
