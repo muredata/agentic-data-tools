@@ -70,7 +70,7 @@ cmd_install() {
 
     mkdir -p "$CACHE_DIR"
 
-    if [ "$DRY_RUN" = false ] && [ "$YES" = false ] && [ "$OUTPUT" != json ] && [ -t 1 ]; then
+    if [ "$DRY_RUN" = false ] && [ "$YES" = false ] && [ "$FORCE" = false ] && [ "$OUTPUT" != json ] && [ -t 1 ]; then
         local preview_skills=()
         while IFS= read -r s; do
             preview_skills+=("$s")
